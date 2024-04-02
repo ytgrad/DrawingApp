@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 
@@ -19,6 +20,7 @@ class DrawingView(context: Context, attrs: AttributeSet): View(context, attrs) {
     private var brushSize: Float = 0.toFloat()
     private var color = Color.BLACK
     private var canvas: Canvas? = null
+    private var paths = ArrayList<CustomPath>()
 
     init {
         setUpDrawing()
@@ -32,7 +34,7 @@ class DrawingView(context: Context, attrs: AttributeSet): View(context, attrs) {
         drawPaint!!.strokeJoin = Paint.Join.ROUND
         drawPaint!!.strokeCap = Paint.Cap.ROUND
         canvasPaint = Paint(Paint.DITHER_FLAG)
-        brushSize = 20.toFloat()
+        //brushSize = 20.toFloat()
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -44,6 +46,13 @@ class DrawingView(context: Context, attrs: AttributeSet): View(context, attrs) {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         canvas.drawBitmap(canvasBitmap!!, 0f, 0f, canvasPaint)
+
+        for(path in paths){
+            drawPaint!!.strokeWidth = path.brushThickness
+            drawPaint!!.color = path.color
+            canvas.drawPath(path, drawPaint!!)
+        }
+
         if(!drawingPath!!.isEmpty){
             drawPaint!!.strokeWidth = drawingPath!!.brushThickness
             drawPaint!!.color = drawingPath!!.color
@@ -67,6 +76,7 @@ class DrawingView(context: Context, attrs: AttributeSet): View(context, attrs) {
                 drawingPath!!.lineTo(touchX!!, touchY!!)
             }
             MotionEvent.ACTION_UP ->{
+                paths.add(drawingPath!!)
                 drawingPath = CustomPath(color, brushSize)
             }
             else -> return false
@@ -74,6 +84,11 @@ class DrawingView(context: Context, attrs: AttributeSet): View(context, attrs) {
         invalidate()
 
         return true
+    }
+
+    fun setBrushSize(newSize: Float){
+        brushSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, newSize, resources.displayMetrics)
+        drawPaint!!.strokeWidth = brushSize
     }
 
     internal inner class CustomPath(var color: Int, var brushThickness: Float): Path() {
