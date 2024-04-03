@@ -1,9 +1,14 @@
 package com.example.drawingapp
 
 import android.app.Dialog
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ImageButton
+import android.widget.Toast
+import androidx.core.view.get
 import com.example.drawingapp.databinding.ActivityMainBinding
 import com.example.drawingapp.databinding.DialogBrushSizeBinding
 
@@ -39,6 +44,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         brushDialog.show()
+    }
+
+    fun onPalletClick(view: View){
+        val tempColor = (view as ImageButton).tag
+
+        binding.drawingView.setColor(tempColor.toString())
     }
 
 }
