@@ -19,12 +19,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         binding.drawingView.setBrushSize(10.toFloat())
         binding.ibBrush.setOnClickListener {
             showBrushSizeDialog()
         }
     }
+
+
 
     private fun showBrushSizeDialog(){
         val brushDialog = Dialog(this)
