@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Dialog
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -28,7 +29,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.ibGallery.setOnClickListener {
-            requestPermission()
+            if(Build.VERSION.SDK_INT < 33){
+                requestPermission()
+            }else{
+                Toast.makeText(this, "have access", Toast.LENGTH_SHORT).show()
+            }
         }
 
     }
