@@ -22,6 +22,21 @@ class DrawingView(context: Context, attrs: AttributeSet): View(context, attrs) {
     private var color = Color.BLACK
     private var canvas: Canvas? = null
     private var paths = ArrayList<CustomPath>()
+    private var undopaths = ArrayList<CustomPath>()
+
+    fun onUndoClick(){
+        if(paths.size > 0){
+            undopaths.add(paths.removeAt(paths.size - 1))
+            invalidate()
+        }
+    }
+
+    fun onRedoClick(){
+        if(undopaths.size > 0){
+            paths.add(undopaths.removeAt(undopaths.size - 1))
+            invalidate()
+        }
+    }
 
     init {
         setUpDrawing()

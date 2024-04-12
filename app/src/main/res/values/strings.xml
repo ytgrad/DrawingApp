@@ -4,4 +4,6 @@
     <string name="medium_brush">medium brush</string>
     <string name="large_brush">large brush</string>
     <string name="background_image">background image</string>
+    <string name="redo_button">redo button</string>
+    <string name="undo_button">undo button</string>
 </resources>

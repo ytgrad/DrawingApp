@@ -34,6 +34,12 @@ class MainActivity : AppCompatActivity() {
         binding.ibBrush.setOnClickListener {
             showBrushSizeDialog()
         }
+        binding.ibUndo.setOnClickListener {
+            binding.drawingView.onUndoClick()
+        }
+        binding.ibRedo.setOnClickListener {
+            binding.drawingView.onRedoClick()
+        }
 
         binding.ibGallery.setOnClickListener {
             if(Build.VERSION.SDK_INT < 33){
